@@ -61,6 +61,8 @@ spring:
   activemq:
     broker-url: 'vm://embedded?broker.persistent=false,useShutdownHook=false'
     in-memory: true
+  file-service:
+    rootdir: 'C:\pass-core-uploads'
 
 server:
   port: 8080
@@ -93,6 +95,8 @@ spring:
     driver-class-name: 'org.postgresql.Driver'
   liquibase:
     enabled: false
+  file-service:
+    root-dir: ${PASS_CORE_FILE_SERVICE_ROOT}
 server:
   port: ${PASS_CORE_PORT}
 
