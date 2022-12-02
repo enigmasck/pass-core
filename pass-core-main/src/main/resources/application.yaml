@@ -62,6 +62,7 @@ spring:
     broker-url: 'vm://embedded?broker.persistent=false,useShutdownHook=false'
     in-memory: true
   file-service:
+    type: ${PASS_CORE_FILE_SERVICE_TYPE}
     rootdir: 'C:\pass-core-uploads'
 
 server:
@@ -96,6 +97,7 @@ spring:
   liquibase:
     enabled: false
   file-service:
+    type: ${PASS_CORE_FILE_SERVICE_TYPE}
     root-dir: ${PASS_CORE_FILE_SERVICE_ROOT}
 server:
   port: ${PASS_CORE_PORT}

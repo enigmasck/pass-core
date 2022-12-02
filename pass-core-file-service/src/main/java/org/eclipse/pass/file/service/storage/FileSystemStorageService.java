@@ -57,9 +57,12 @@ public class FileSystemStorageService implements StorageService{
                 throw new FileSystemException("File Service: No permission to read root directory.");
             }
             if(!Files.exists(rootLoc)){
-                throw new FileSystemException("File Service: File path doesn't exist for root.");
+                try{
+                    Files.createDirectory(rootLoc);
+                } catch (IOException e){
+                    throw new FileSystemException("File Service: Root directory could not be created: " + e.toString());
+                }
             }
-
         } catch(FileSystemException e){
             LOG.error(e.toString());
         }

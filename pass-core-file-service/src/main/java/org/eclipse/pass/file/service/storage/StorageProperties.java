@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 public class StorageProperties {
     private final String rootdir;
 
-    public StorageProperties(String rootdir){
-        this.rootdir = rootdir;
+    public StorageProperties(String rootDir){
+        this.rootdir = rootDir;
     }
 
     public String getStorageRootDir(){return rootdir;}
