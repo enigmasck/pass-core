@@ -16,21 +16,32 @@
  */
 package org.eclipse.pass.file.service;
 
-import liquibase.pro.packaged.T;
-import org.eclipse.pass.file.service.storage.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URI;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.pass.file.service.storage.FileSystemStorageService;
+import org.eclipse.pass.file.service.storage.StorageFile;
+import org.eclipse.pass.file.service.storage.StorageProperties;
+import org.eclipse.pass.file.service.storage.StorageService;
+import org.eclipse.pass.file.service.storage.StorageServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
-
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.net.URI;
+
 
 /**
  * PassFileServiceController is the controller class responsible for the File Service endpoints, which allows pass-core
@@ -41,12 +52,14 @@ import java.net.URI;
 @RestController
 public class PassFileServiceController {
     private static final Logger LOG = LoggerFactory.getLogger(PassFileServiceController.class);
-    private FileSystemStorageService fileService;
+    private StorageService storageService;
+    private StorageProperties storageProperties;
 
     /**
      *   Class constructor.
      */
-    public void PassFileServiceController(){
+    public void PassFileServiceController(StorageProperties storageProperties) {
+        this.storageProperties = storageProperties;
     }
 
     /**
@@ -58,11 +71,18 @@ public class PassFileServiceController {
      * @throws FileServiceException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     @PostMapping("/file")
-    public ResponseEntity<File> fileUpload(@RequestParam("file") MultipartFile file, String fileName) throws FileServiceException {
+    public ResponseEntity<StorageFile> fileUpload(@RequestParam("file") MultipartFile file,
+                                                  @RequestParam("fileName") String fileName)
+            throws FileServiceException {
         LOG.info("Uploading New File");
-        if(fileName == null) { throw new FileServiceException(HttpStatus.NOT_FOUND, "Missing File Name"); }
-        File returnFile = fileService.store(file, fileName);
-        return ResponseEntity.created(URI.create(returnFile.getId())).body(returnFile);
+        System.out.println("Uploading new file");
+        StorageServiceFactory storageFactory = new StorageServiceFactory();
+        storageService = storageFactory.createStorage(storageProperties.getStorageType());
+        if (fileName == null) {
+            throw new FileServiceException(HttpStatus.NOT_FOUND, "Missing File Name");
+        }
+        StorageFile returnStorageFile = storageService.store(file, fileName);
+        return ResponseEntity.created(URI.create(returnStorageFile.getId())).body(returnStorageFile);
     }
 
     /**
@@ -73,14 +93,34 @@ public class PassFileServiceController {
      * @throws FileServiceException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     @GetMapping("/file/{fileId}")
-    public ResponseEntity<Resource> getFileById(@PathVariable String fileId) throws FileServiceException {
+    public ResponseEntity<String> getFileById(@PathVariable String fileId) throws FileServiceException {
+        System.out.println("Get file by ID");
         LOG.info("Get file by ID.");
-        if(fileId == null) {
+        if (fileId == null) {
             LOG.error("File ID not provided to get a file.");
             throw new FileServiceException(HttpStatus.NOT_FOUND, "Missing File ID");
         }
         //TODO implement
-        return null;
+        //testing
+        return ResponseEntity.ok().body("All good.");
+    }
+
+    @GetMapping("/file/test")
+    public ResponseEntity<String> fileTest() {
+        return ResponseEntity.ok().body("Success");
+    }
+
+    @GetMapping("/file/test/test")
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+
+        try (OutputStream out = response.getOutputStream()) {
+            JsonObject jsonObject = Json.createObjectBuilder()
+                    .add("success", "success")
+                    .build();
+            out.write(jsonObject.toString().getBytes());
+            response.setStatus(200);
+        }
     }
 
     /**
@@ -93,15 +133,11 @@ public class PassFileServiceController {
     @DeleteMapping("/file/{fileId}")
     public ResponseEntity<Resource> deleteFileById(@PathVariable String fileId) throws FileServiceException {
         LOG.info("Get file by ID.");
-        if(fileId == null) {
+        if (fileId == null) {
             LOG.error("File ID not provided to delete file.");
             throw new FileServiceException(HttpStatus.NOT_FOUND, "Missing File ID");
         }
         //TODO implement
         return null;
     }
-
-
-
-
 }

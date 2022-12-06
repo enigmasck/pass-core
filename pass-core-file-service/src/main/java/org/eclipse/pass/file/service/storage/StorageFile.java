@@ -1,10 +1,10 @@
 package org.eclipse.pass.file.service.storage;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Objects;
 
-public class File {
+import com.google.gson.annotations.SerializedName;
+
+public class StorageFile {
     @SerializedName("id")
     private String id = null;
 
@@ -23,7 +23,16 @@ public class File {
     @SerializedName("extension")
     private String extension = null;
 
-    public File(String id, String fileName, String mimeType, String storageType, Long size, String extension){
+    public StorageFile() {
+        this.id = "999";
+        this.id = "DefaultFileName";
+        this.mimeType = "DefaultMineType";
+        this.storageType = "DefaultStorageType";
+        this.size = 0L;
+        this.extension = "DefaultExtension";
+    }
+
+    public StorageFile(String id, String fileName, String mimeType, String storageType, Long size, String extension) {
         this.id = id;
         this.fileName = fileName;
         this.mimeType = mimeType;
@@ -31,7 +40,6 @@ public class File {
         this.size = size;
         this.extension = extension;
     }
-
 
     /**
      * Get id
@@ -56,7 +64,6 @@ public class File {
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
-
 
     /**
      * Get mimeType
@@ -94,7 +101,6 @@ public class File {
         this.size = size;
     }
 
-
     /**
      * Get extension
      * @return extension
@@ -107,7 +113,6 @@ public class File {
         this.extension = extension;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -116,13 +121,13 @@ public class File {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        File file = (File) o;
-        return Objects.equals(this.id, file.id) &&
-                Objects.equals(this.fileName, file.fileName) &&
-                Objects.equals(this.mimeType, file.mimeType) &&
-                Objects.equals(this.storageType, file.storageType) &&
-                Objects.equals(this.size, file.size) &&
-                Objects.equals(this.extension, file.extension);
+        StorageFile storageFile = (StorageFile) o;
+        return Objects.equals(this.id, storageFile.id) &&
+                Objects.equals(this.fileName, storageFile.fileName) &&
+                Objects.equals(this.mimeType, storageFile.mimeType) &&
+                Objects.equals(this.storageType, storageFile.storageType) &&
+                Objects.equals(this.size, storageFile.size) &&
+                Objects.equals(this.extension, storageFile.extension);
     }
 
     @Override
@@ -130,12 +135,10 @@ public class File {
         return Objects.hash(id, fileName, mimeType, storageType, size, extension);
     }
 
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class File {\n");
-
         sb.append("    id: ").append(toIndentedString(id)).append("\n");
         sb.append("    fileName: ").append(toIndentedString(fileName)).append("\n");
         sb.append("    mimeType: ").append(toIndentedString(mimeType)).append("\n");

@@ -62,8 +62,10 @@ spring:
     broker-url: 'vm://embedded?broker.persistent=false,useShutdownHook=false'
     in-memory: true
   file-service:
-    type: ${PASS_CORE_FILE_SERVICE_TYPE}
-    rootdir: 'C:\pass-core-uploads'
+    storage-type: ${PASS_CORE_FILE_SERVICE_TYPE}
+    ocfl-root-dir: ${PASS_CORE_FILE_SERVICE_OCFL_ROOT}
+    ocfl-work-dir: ${PASS_CORE_FILE_SERVICE_OCFL_WORK}
+    temp-dir: ${PASS_CORE_FILE_SERVICE_TEMP}
 
 server:
   port: 8080
@@ -97,8 +99,10 @@ spring:
   liquibase:
     enabled: false
   file-service:
-    type: ${PASS_CORE_FILE_SERVICE_TYPE}
-    root-dir: ${PASS_CORE_FILE_SERVICE_ROOT}
+    storage-type: ${PASS_CORE_FILE_SERVICE_TYPE}
+    ocfl-root-dir: ${PASS_CORE_FILE_SERVICE_OCFL_ROOT}
+    ocfl-work-dir: ${PASS_CORE_FILE_SERVICE_OCFL_WORK}
+    temp-dir: ${PASS_CORE_FILE_SERVICE_TEMP}
 server:
   port: ${PASS_CORE_PORT}
 

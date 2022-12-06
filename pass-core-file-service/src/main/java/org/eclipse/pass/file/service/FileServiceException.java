@@ -1,11 +1,11 @@
 package org.eclipse.pass.file.service;
 
-import org.springframework.http.HttpStatus;
-
 import java.util.List;
 import java.util.Map;
 
-public class FileServiceException extends Exception{
+import org.springframework.http.HttpStatus;
+
+public class FileServiceException extends Exception {
 
     //private int code = 0;
     private HttpStatus code = null;
@@ -14,26 +14,25 @@ public class FileServiceException extends Exception{
 
     public FileServiceException() {}
 
-    public FileServiceException(Throwable throwable) {
-        super(throwable);
-    }
-
     public FileServiceException(String message) {
         super(message);
     }
 
-    public FileServiceException(String message, Throwable throwable, HttpStatus code, Map<String, List<String>> responseHeaders, String responseBody) {
+    public FileServiceException(String message, Throwable throwable, HttpStatus code, Map<String,
+            List<String>> responseHeaders, String responseBody) {
         super(message, throwable);
         this.code = code;
         this.responseHeaders = responseHeaders;
         this.responseBody = responseBody;
     }
 
-    public FileServiceException(String message, HttpStatus code, Map<String, List<String>> responseHeaders, String responseBody) {
+    public FileServiceException(String message, HttpStatus code, Map<String, List<String>> responseHeaders,
+        String responseBody) {
         this(message, (Throwable) null, code, responseHeaders, responseBody);
     }
 
-    public FileServiceException(String message, Throwable throwable, HttpStatus code, Map<String, List<String>> responseHeaders) {
+    public FileServiceException(String message, Throwable throwable, HttpStatus code, Map<String,
+        List<String>> responseHeaders) {
         this(message, throwable, code, responseHeaders, null);
     }
 
@@ -46,7 +45,8 @@ public class FileServiceException extends Exception{
         this.code = code;
     }
 
-    public FileServiceException(HttpStatus code, String message, Map<String, List<String>> responseHeaders, String responseBody) {
+    public FileServiceException(HttpStatus code, String message, Map<String, List<String>> responseHeaders,
+                                String responseBody) {
         this(code, message);
         this.responseHeaders = responseHeaders;
         this.responseBody = responseBody;
