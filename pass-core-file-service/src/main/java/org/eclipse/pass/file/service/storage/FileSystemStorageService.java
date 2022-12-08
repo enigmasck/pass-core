@@ -43,11 +43,19 @@ public class FileSystemStorageService implements StorageService {
         UNKNOWN
     }
 
-    public FileSystemStorageService(StorageConfiguration storageConfiguration) {
+    public FileSystemStorageService() {
+        this.rootLoc = Paths.get("C:\\root");
+        this.workLoc = Paths.get("C:\\work");
+        this.tempLoc = Paths.get("C:\\temp");
+    }
+
+    public FileSystemStorageService(StorageProperties storageProperties) {
         //TODO read in the properties from the application.yaml
-        this.rootLoc = Paths.get(storageConfiguration.getStorageRootDir());
-        this.workLoc = Paths.get(storageConfiguration.getStorageWorkDir());
-        this.tempLoc = Paths.get(storageConfiguration.getStorageTempDir());
+        LOG.info("FileSystemStorageService Constructor:");
+        LOG.info("getStorageRootDir = " + storageProperties.getStorageRootDir());
+        this.rootLoc = Paths.get(storageProperties.getStorageRootDir());
+        this.workLoc = Paths.get(storageProperties.getStorageWorkDir());
+        this.tempLoc = Paths.get(storageProperties.getStorageTempDir());
         //this.rootLoc = Paths.get("C:\\pass-core-ocfl-root");
         //this.workLoc = Paths.get("C:\\pass-core-ocfl-work");
         //this.tempLoc = Paths.get("C:\\pass-core-temp");
@@ -126,9 +134,9 @@ public class FileSystemStorageService implements StorageService {
 
             //create pass-core File object to return
             storageFile = new StorageFile(
-                    generateId(),
-                    fileName,
-                    mFile.getContentType(),
+                    "1",
+                    "test",
+                    "test",
                     storageType,
                     mFile.getSize(),
                     getExtensionFromFile(mFile.getOriginalFilename()).toString()

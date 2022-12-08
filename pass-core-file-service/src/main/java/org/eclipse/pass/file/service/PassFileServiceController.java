@@ -16,20 +16,15 @@
  */
 package org.eclipse.pass.file.service;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URI;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import org.eclipse.pass.file.service.storage.StorageConfiguration;
 import org.eclipse.pass.file.service.storage.StorageFile;
-import org.eclipse.pass.file.service.storage.StorageProperties;
 import org.eclipse.pass.file.service.storage.StorageService;
 import org.eclipse.pass.file.service.storage.StorageServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,13 +48,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class PassFileServiceController {
     private static final Logger LOG = LoggerFactory.getLogger(PassFileServiceController.class);
     private StorageService storageService;
-    private StorageProperties storageProperties;
+
+    @Autowired
+    StorageConfiguration storageConfiguration;
 
     /**
      *   Class constructor.
      */
-    public void PassFileServiceController(StorageProperties storageProperties) {
-        this.storageProperties = storageProperties;
+    public void PassFileServiceController() {
     }
 
     /**
@@ -75,13 +71,14 @@ public class PassFileServiceController {
                                                   @RequestParam("fileName") String fileName)
             throws FileServiceException {
         LOG.info("Uploading New File");
-        System.out.println("Uploading new file");
         StorageServiceFactory storageFactory = new StorageServiceFactory();
-        storageService = storageFactory.createStorage(storageProperties.getStorageType());
+        storageService = storageFactory.createStorage(storageConfiguration.getStorageProperties());
         if (fileName == null) {
             throw new FileServiceException(HttpStatus.NOT_FOUND, "Missing File Name");
         }
+        LOG.info("Storing File");
         StorageFile returnStorageFile = storageService.store(file, fileName);
+        LOG.info("Storing File");
         return ResponseEntity.created(URI.create(returnStorageFile.getId())).body(returnStorageFile);
     }
 
@@ -103,24 +100,6 @@ public class PassFileServiceController {
         //TODO implement
         //testing
         return ResponseEntity.ok().body("All good.");
-    }
-
-    @GetMapping("/file/test")
-    public ResponseEntity<String> fileTest() {
-        return ResponseEntity.ok().body("Success");
-    }
-
-    @GetMapping("/file/test/test")
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-
-        try (OutputStream out = response.getOutputStream()) {
-            JsonObject jsonObject = Json.createObjectBuilder()
-                    .add("success", "success")
-                    .build();
-            out.write(jsonObject.toString().getBytes());
-            response.setStatus(200);
-        }
     }
 
     /**

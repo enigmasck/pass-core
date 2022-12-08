@@ -8,9 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 //TODO implement
 public class AwsStorageService implements StorageService {
 
-    private final StorageConfiguration storageConfiguration;
-    public AwsStorageService(StorageConfiguration storageConfiguration) {
-        this.storageConfiguration = storageConfiguration;
+    private final StorageProperties storageProperties;
+    public AwsStorageService(StorageProperties storageProperties) {
+        this.storageProperties = storageProperties;
     }
 
     @Override
