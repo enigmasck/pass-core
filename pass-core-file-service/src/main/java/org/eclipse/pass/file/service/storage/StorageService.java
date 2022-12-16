@@ -16,6 +16,8 @@
  */
 package org.eclipse.pass.file.service.storage;
 
+import java.util.Optional;
+
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,5 +35,7 @@ public interface StorageService {
     String generateId();
 
     String getResourceFileName(String fileId);
+
+    Optional<String> getExtensionFromFile(String fn);
 
 }

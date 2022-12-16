@@ -44,8 +44,8 @@ public class StorageServiceFactory {
                 case "FILE_SYSTEM":
                     storageService = new FileSystemStorageService(storageProperties);
                     break;
-                case "AWS_S3":
-                    //TODO will need to implement AWS S3
+                case "S3":
+                    //TODO will need to implement S3
                     storageService = new S3StorageService(storageProperties);
                     break;
                 default:
