@@ -235,7 +235,8 @@ public class FileSystemStorageService implements StorageService {
         return fileDetails.get().getStorageRelativePath();
     }
 
-    private Optional<String> getExtensionFromFile(String fn) {
+    @Override
+    public Optional<String> getExtensionFromFile(String fn) {
         return Optional.ofNullable(fn)
                 .filter(f -> f.contains("."))
                 .map(f -> f.substring(fn.lastIndexOf(".") + 1));
