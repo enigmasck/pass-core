@@ -20,8 +20,9 @@
         <ocfl.java.core>1.5.0</ocfl.java.core>
         <ocfl.java.aws>1.5.0</ocfl.java.aws>
         <springframework.spring.web>5.3.12</springframework.spring.web>
-        <google.code.gson>2.9.1</google.code.gson>
-        <liquibase.core>4.8.0</liquibase.core>
+        <apache.commons.io>2.8.0</apache.commons.io>
+        <apache.commons-lang>2.4</apache.commons-lang>
+        <com.google.jimfs>1.2</com.google.jimfs>
     </properties>
 
     <dependencyManagement>
@@ -69,15 +70,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>${google.code.gson}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-            <version>${liquibase.core}</version>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${apache.commons.io}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -117,8 +112,22 @@
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>${apache.commons-lang}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.jimfs</groupId>
+            <artifactId>jimfs</artifactId>
+            <version>${com.google.jimfs}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+        </dependency>
     </dependencies>
-
-
 
 </project>

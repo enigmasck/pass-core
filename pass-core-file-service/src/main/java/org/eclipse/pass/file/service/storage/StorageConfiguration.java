@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2019 Johns Hopkins University
+ * Copyright 2023 Johns Hopkins University
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -16,16 +16,12 @@
  */
 package org.eclipse.pass.file.service.storage;
 
-import org.eclipse.pass.file.service.PassFileServiceController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableConfigurationProperties(StorageProperties.class)
 public class StorageConfiguration {
-    private static final Logger LOG = LoggerFactory.getLogger(PassFileServiceController.class);
 
     private StorageProperties storageProperties;
 
@@ -35,6 +31,10 @@ public class StorageConfiguration {
 
     public StorageProperties getStorageProperties() {
         return storageProperties;
+    }
+
+    public void setStorageProperties(StorageProperties storageProperties) {
+        this.storageProperties = storageProperties;
     }
 
 }

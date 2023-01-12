@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2019 Johns Hopkins University
+ * Copyright 2023 Johns Hopkins University
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -18,25 +18,12 @@ package org.eclipse.pass.file.service.storage;
 
 import java.util.Objects;
 
-import com.google.gson.annotations.SerializedName;
-
 public class StorageFile {
-    @SerializedName("id")
     private String id = null;
-
-    @SerializedName("fileName")
     private String fileName = null;
-
-    @SerializedName("mimeType")
     private String mimeType = null;
-
-    @SerializedName("storageType")
     private String storageType = null;
-
-    @SerializedName("size")
     private Long size = null;
-
-    @SerializedName("extension")
     private String extension = null;
 
     public StorageFile() {
