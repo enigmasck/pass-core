@@ -71,6 +71,11 @@
     <junit.jupiter.version>5.5.2</junit.jupiter.version>
     <okhttp.version>4.10.0</okhttp.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <ocfl.java.core.version>1.5.0</ocfl.java.core.version>
+    <ocfl.java.aws.version>1.5.0</ocfl.java.aws.version>
+    <springframework.spring.web.version>5.3.12</springframework.spring.web.version>
+    <apache.commons.io.version>2.8.0</apache.commons.io.version>
+    <apache.commons-lang.version>2.4</apache.commons-lang.version>
   </properties>
 
   <dependencyManagement>

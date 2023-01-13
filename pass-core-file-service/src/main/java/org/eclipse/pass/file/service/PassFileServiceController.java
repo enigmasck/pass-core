@@ -43,9 +43,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * PassFileServiceController is the controller class responsible for the File Service endpoints, which allows pass-core
- * internal and external services to upload, retrieve and delete files.
+ * internal and external services to upload, retrieve and delete files. Configuration of the File Service is done
+ * through .env file and is loaded into the StorageProperties.
  *
- * Configuration of the File Service is done through .env environment variable file.
+ * @author Tim Sanders
  */
 @RestController
 public class PassFileServiceController {

@@ -1,3 +1,19 @@
+/*
+ *
+ * Copyright 2023 Johns Hopkins University
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
 package org.eclipse.pass.file.service.storage;
 
 import java.io.IOException;
@@ -32,6 +48,16 @@ import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 
+/**
+ * The FileStorageService is responsible for the implementation of the persistence of files to their respective
+ * storage or repository. The types of storage are defined in the StorageServiceUtils. The FileStorageService depends
+ * on a properly configured repository. The environment variables are externalized in the .ENV file. The
+ * FileStorageService is lazily loaded to ensure that the configuration is properly loaded and to minimize the startup
+ * time.
+ *
+ * @author Tim Sanders
+ * @see StorageServiceUtils
+ */
 @Lazy
 @Service
 public class FileStorageService {
@@ -51,6 +77,9 @@ public class FileStorageService {
     private String bucketName = "";
     private String repoPrefix = "";
     private Region region = Region.US_EAST_1;
+
+    private FileStorageService(){
+    }
 
     /**
      *  FileStorageService Class constructor.
@@ -128,6 +157,17 @@ public class FileStorageService {
         }
     }
 
+    /**
+     * Persists a file to the repository/storage indicated in the StorageProperties.
+     *
+     * @param mFile A MultiPart file that is to be persisted into storage or repository.
+     * @return StorageFile representation of the file that was persisted. It contains meta information about the file
+     * for example the name, file size and mime type.
+     * @throws IOException If a file is empty or missing, paths are incorrect, or the appropriate permissions
+     * are not configured on the repository an IOException will be thrown.
+     *
+     * @see StorageFile
+     */
     public StorageFile storeFile(MultipartFile mFile) throws IOException {
         StorageFile storageFile = null;
         //NOTE: the work directory configured on the ocfl-java client should be located on the same mount as the OCFL
@@ -170,18 +210,23 @@ public class FileStorageService {
         return storageFile;
     }
 
+    /**
+     * Gets the file (bytes) of the supplied fileId.
+     *
+     * @param fileId The fileId of the file to be returned.
+     * @return Returns a file as a ByteArrayResource
+     * @throws IOException If a file does not exist or the appropriate read/write permissions are not correct an
+     * IOException will be thrown.
+     */
     public ByteArrayResource getFile(String fileId) throws IOException {
-        LOG.info("File Service: getFile()");
         ByteArrayResource loadedResource;
         String tmpDir = System.getProperty("java.io.tmpdir");
         Path tempLoadDir = Paths.get(tmpDir, this.tempLoc.toString(), fileId,
                 Instant.now().toString().replace(":","-").replace(".","-"));
         Path tempLoadParentDir = Paths.get(tmpDir, this.tempLoc.toString(), fileId);
-        LOG.info("File Service: getFile() - After setting paths");
         try {
             String filePath = getResourceFileRelativePath(fileId);
             Path filePathAbs = Paths.get(this.rootLoc.toString(), filePath);
-            LOG.info("getFile file path = " + filePathAbs);
             if (!Files.exists(filePathAbs)) {
                 throw new IOException("File Service: FileID does not exist: " + fileId);
             }
@@ -215,10 +260,20 @@ public class FileStorageService {
         }
     }
 
+    /**
+     * Deletes a file in storage or repository that is defined in the configuration
+     * @param fileId The fileId of the file to be deleted
+     */
     public void deleteFile(String fileId) {
         ocflRepository.purgeObject(fileId);
     }
 
+    /**
+     * Gets the relative path in the OCFL repository from the fileID supplied. It will return the most recent version
+     * file path.
+     * @param fileId The fileId of the file path to be returned.
+     * @return The relative path of the file.
+     */
     public String getResourceFileRelativePath(String fileId) {
         VersionDetails versionDetails = ocflRepository.describeVersion(ObjectVersionId.head(fileId));
         Collection<FileDetails> allVersionFiles = versionDetails.getFiles();

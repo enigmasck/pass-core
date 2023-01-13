@@ -13,18 +13,6 @@
     <artifactId>pass-core-file-service</artifactId>
     <version>0.2.0-SNAPSHOT</version>
 
-    <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <ocfl.java.core>1.5.0</ocfl.java.core>
-        <ocfl.java.aws>1.5.0</ocfl.java.aws>
-        <springframework.spring.web>5.3.12</springframework.spring.web>
-        <apache.commons.io>2.8.0</apache.commons.io>
-        <apache.commons-lang>2.4</apache.commons-lang>
-        <com.google.jimfs>1.2</com.google.jimfs>
-    </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -39,14 +27,19 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.eclipse.pass</groupId>
+            <artifactId>pass-core-object-service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>edu.wisc.library.ocfl</groupId>
             <artifactId>ocfl-java-core</artifactId>
-            <version>${ocfl.java.core}</version>
+            <version>${ocfl.java.core.version}</version>
         </dependency>
         <dependency>
             <groupId>edu.wisc.library.ocfl</groupId>
             <artifactId>ocfl-java-aws</artifactId>
-            <version>${ocfl.java.aws}</version>
+            <version>${ocfl.java.aws.version}</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish</groupId>
@@ -66,13 +59,13 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>${springframework.spring.web}</version>
+            <version>${springframework.spring.web.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>${apache.commons.io}</version>
+            <version>${apache.commons.io.version}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -88,10 +81,6 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -115,13 +104,7 @@
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
-            <version>${apache.commons-lang}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.jimfs</groupId>
-            <artifactId>jimfs</artifactId>
-            <version>${com.google.jimfs}</version>
+            <version>${apache.commons-lang.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

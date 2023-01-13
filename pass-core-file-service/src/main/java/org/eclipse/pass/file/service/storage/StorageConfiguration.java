@@ -19,20 +19,46 @@ package org.eclipse.pass.file.service.storage;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * The StorageConfiguration is responsible for handling the StorageProperties. The FileStorageService does not get the
+ * storage configuration directly but through the StorageConfiguration.
+ *
+ * @author Tim Sanders
+ * @see StorageProperties
+ */
 @Configuration
 @EnableConfigurationProperties(StorageProperties.class)
 public class StorageConfiguration {
-
     private StorageProperties storageProperties;
 
+    private StorageConfiguration() {
+    }
+
+    /**
+     * StorageConfiguration constructor that initializes the StorageProperties.
+     *
+     * @param storageProperties are injected into the StorageConfiguration at startup.
+     */
     public StorageConfiguration(StorageProperties storageProperties) {
         this.storageProperties = storageProperties;
     }
 
+    /**
+     * Gets the StorageProperties of the StorageConfiguration.
+     *
+     * @return An instance of the StorageProperties
+     */
     public StorageProperties getStorageProperties() {
         return storageProperties;
     }
 
+    /**
+     * Sets the StorageProperties of the StorageConfiguration. The FileService is designed to load the application
+     * variables defined in the .env file. To override the StorageProperties should be used with caution as there might
+     * be unintended results. If the configuration of the FileService needs to be modified, do so in the .env file.
+     *
+     * @param storageProperties The StorageProperties to set in the StorageConfiguration.
+     */
     public void setStorageProperties(StorageProperties storageProperties) {
         this.storageProperties = storageProperties;
     }

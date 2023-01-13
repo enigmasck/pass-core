@@ -20,6 +20,12 @@ import java.io.File;
 import java.nio.file.Path;
 import java.security.SecureRandom;
 
+/**
+ * Utility class that helps with File Service. The StorageServiceTypes defines the type of storage supported by the
+ * File Service. The two types of persistence are supported: File Systems and S3 buckets
+ *
+ * @author Tim Sanders
+ */
 public final class StorageServiceUtils {
 
     public enum StorageServiceType {
