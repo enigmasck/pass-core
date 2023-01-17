@@ -24,12 +24,12 @@ import java.util.Objects;
  * @author Tim Sanders
  */
 public class StorageFile {
-    private String id = null;
-    private String fileName = null;
-    private String mimeType = null;
-    private String storageType = null;
-    private Long size = null;
-    private String extension = null;
+    private String id;
+    private String fileName;
+    private String mimeType;
+    private String storageType;
+    private Long size;
+    private String extension;
 
     /**
      * Default Constructor which initializes the StorageFile with default value for member variables
@@ -37,7 +37,7 @@ public class StorageFile {
      */
     public StorageFile() {
         this.id = "999";
-        this.id = "DefaultFileName";
+        this.fileName = "DefaultFileName";
         this.mimeType = "DefaultMineType";
         this.storageType = "DefaultStorageType";
         this.size = 0L;

@@ -1,6 +1,7 @@
 package org.eclipse.pass.file.service.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -19,10 +20,10 @@ import org.springframework.util.FileSystemUtils;
 public class FileStorageServiceTest {
     StorageConfiguration storageConfiguration;
     private FileStorageService fileStorageService;
-    private StorageProperties properties = new StorageProperties();
-    private String fileSystemType = "FILE_SYSTEM";
-    private String rootDir = Paths.get(System.getProperty("java.io.tmpdir"),"/pass-core-ocfl-root").toString();
-    private String workDir = Paths.get(System.getProperty("java.io.tmpdir"),"/pass-core-ocfl-work").toString();
+    private final StorageProperties properties = new StorageProperties();
+    private final String fileSystemType = "FILE_SYSTEM";
+    private final String rootDir = Paths.get(System.getProperty("java.io.tmpdir"),"/pass-core-ocfl-root").toString();
+    private final String workDir = Paths.get(System.getProperty("java.io.tmpdir"),"/pass-core-ocfl-work").toString();
     private String tempDir = "/pass-core-temp"; //File Service uses the system tmpdir, no need to modify this path
 
     private final int idLength = 25;
@@ -56,7 +57,7 @@ public class FileStorageServiceTest {
         try {
             StorageFile storageFile = fileStorageService.storeFile(new MockMultipartFile("test", "test.txt",
                     MediaType.TEXT_PLAIN_VALUE, "Test Pass-core".getBytes()));
-            assertTrue(!fileStorageService.getResourceFileRelativePath(storageFile.getId()).isEmpty());
+            assertFalse(fileStorageService.getResourceFileRelativePath(storageFile.getId()).isEmpty());
         } catch (Exception e) {
             assertEquals("An exception was thrown in storeFileThatExists.", e.getMessage());
         }

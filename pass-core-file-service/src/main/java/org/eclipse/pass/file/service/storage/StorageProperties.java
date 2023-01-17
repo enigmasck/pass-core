@@ -21,7 +21,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * StorageProperties are the File Service configuration properties indicating where and what type of storage is used
  * for persistence. The StorageProperties are managed by the StorageConfiguration.
- *
  * Important: The OCFL root and working directory must be on the same mount.
  *
  * @author Tim Sanders

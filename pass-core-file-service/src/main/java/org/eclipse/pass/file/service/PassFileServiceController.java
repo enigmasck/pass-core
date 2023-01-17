@@ -39,8 +39,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-
-
 /**
  * PassFileServiceController is the controller class responsible for the File Service endpoints, which allows pass-core
  * internal and external services to upload, retrieve and delete files. Configuration of the File Service is done
@@ -150,5 +148,4 @@ public class PassFileServiceController {
         fileStorageService.deleteFile(fileId);
         return ResponseEntity.ok().body("Deleted");
     }
-
 }
