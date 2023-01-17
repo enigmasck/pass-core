@@ -173,7 +173,7 @@ public class FileStorageService {
         //NOTE: the work directory configured on the ocfl-java client should be located on the same mount as the OCFL
         //storage root.
         try {
-            if (mFile.isEmpty() || mFile == null) {
+            if (mFile.isEmpty()) {
                 throw new FileSystemException("File Service: File is empty or missing.");
             }
             String origFileNameExt = mFile.getOriginalFilename();
